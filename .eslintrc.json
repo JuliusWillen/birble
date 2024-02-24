@@ -1,5 +1,5 @@
 {
-  "extends": ["prettier"],
+  "extends": ["prettier", "next", "next/core-web-vitals"],
   "plugins": ["prettier"],
   "rules": {
     "prettier/prettier": ["error", { "semi": true }],

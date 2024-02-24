@@ -20,5 +20,5 @@ const TopBar = () => {
 };
 
 const Content = ({ children }: { children: ReactNode }) => {
-  return <div className='size-full p-5'>{children}</div>;
+  return <div className='flex flex-col flex-grow overflow-auto p-5'>{children}</div>;
 };

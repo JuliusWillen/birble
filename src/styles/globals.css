@@ -1,14 +1,29 @@
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+body,
+html {
+  font-family: 'Quicksand', sans-serif;
+}
+
 .primary-bg {
   background: rgb(34, 193, 195);
-  background: linear-gradient(0deg, rgba(206, 253, 45, 0.737114914325105) 0%, rgba(34, 193, 195, 1) 100%);
+  background: linear-gradient(0deg, rgba(45, 253, 59, 0.737) 0%, rgba(34, 193, 195, 1) 100%);
 }
 
 h1 {
   font-size: 3rem;
   font-weight: 700;
   color: #fff;
+}
+
+p {
+  font-weight: 300;
+}
+
+.button:active {
+  transform: scale(0.95);
 }
