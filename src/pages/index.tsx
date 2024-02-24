@@ -1,48 +1,51 @@
 import { RoundButton } from '@/elements/button';
 import { Card } from '@/elements/card';
+import { useQuote, Quote, useUnsplashImage, UnsplashImage } from '@/hooks';
 import { faRotate } from '@fortawesome/free-solid-svg-icons';
 import { useEffect, useState } from 'react';
 
 export default function Home() {
-  const [image, setImage] = useState(
-    'https://images.pexels.com/photos/1661179/pexels-photo-1661179.jpeg'
-  );
-  const [quote, setQuote] = useState('You are very cool');
-  const [isLoading, setIsLoading] = useState(false);
+  const [image, setImage] = useState<UnsplashImage | null>();
+  const [quote, setQuote] = useState<Quote | null>();
 
-  const reload = async () => {
-    setIsLoading(true);
+  const { next: nextImage, isLoading: loadingImage, error: imageError } = useUnsplashImage('bird');
+  const { next: nextQuote, isLoading: loadingQuote, error: quoteError } = useQuote();
+
+  const reload = () => {
     try {
-      const imageResult = await fetch('https://source.unsplash.com/random');
-      const quoteResult = await fetch('https://api.kanye.rest');
+      const imageResult = nextImage();
+      const quoteResult = nextQuote();
 
-      if (quoteResult.ok) {
-        const data = await quoteResult.json();
-        setQuote(data.quote);
+      if (imageResult) {
+        setImage(imageResult);
       }
-      if (imageResult.ok) {
-        setImage(imageResult.url);
+
+      if (quoteResult) {
+        setQuote(quoteResult);
       }
     } catch (error) {
       console.error(error);
-    } finally {
-      setIsLoading(false);
     }
   };
 
   return (
     <div className='flex flex-col justify-between items-center h-full gap-5'>
-      <ImageContent image={image} quote={quote} />
-      <RoundButton onClick={reload} className='size-24' icon={faRotate} isLoading={isLoading} />
+      <ImageContent image={image?.url} quote={quote?.quote} />
+      <RoundButton
+        onClick={reload}
+        className='size-24'
+        icon={faRotate}
+        isLoading={loadingImage || loadingQuote}
+      />
     </div>
   );
 }
 
-const ImageContent = ({ image, quote }: { image: string; quote: string }) => {
+const ImageContent = ({ image, quote }: { image?: string | null; quote?: string | null }) => {
   return (
     <Card>
-      <p className='p-4 text-center text-sm'>{`"${quote}"`}</p>
-      <img src={image} alt='Birble' />
+      {quote && <p className='p-4 text-center text-sm'>{`"${quote}"`}</p>}
+      {image && <img src={image} alt='Birble' />}
     </Card>
   );
 };

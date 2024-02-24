@@ -1,3 +1,5 @@
+import { faKiwiBird } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { ReactNode } from 'react';
 
 export const Layout = ({ children }: { children: ReactNode }) => {
@@ -11,11 +13,14 @@ export const Layout = ({ children }: { children: ReactNode }) => {
 
 const TopBar = () => {
   return (
-    <div className='flex flex-col h-16 shadow-xl justify-center'>
-      <div className='text-center'>
-        <h1>Birble</h1>
+    <>
+      <div className='flex h-16 shadow-xl justify-center items-center gap-5'>
+        <div className='text-center'>
+          <h1>Birble</h1>
+        </div>
+        <FontAwesomeIcon icon={faKiwiBird} className='text-white size-10' />
       </div>
-    </div>
+    </>
   );
 };
 
